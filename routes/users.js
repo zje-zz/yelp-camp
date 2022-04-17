@@ -28,12 +28,13 @@ router.get('/login', (req, res) => {
     res.render('users/login');
 });
 
-router.post('/login', passport.authenticate('local', {failureFlash: true, failureRedirect: '/login'}), (req, res) =>{
-    res.flash('success', 'Welcome Back!');
-    const redirectURL = req.session.returnTo || '/campgrounds'
+router.post('/login', passport.authenticate('local', { failureFlash: true, failureRedirect: '/login' }), (req, res) => {
+    req.flash('success', 'welcome back!');
+    const redirectUrl = req.session.returnTo || '/campgrounds';
     delete req.session.returnTo;
-    res.redirect(redirectURL);
+    res.redirect(redirectUrl);
 });
+
 router.get('/logout', (req, res) => {
     req.logout();
     req.flash('success', 'Goodbye!');
